@@ -1,9 +1,15 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ?spdy-client
 =======
 spdy-client
 ===========
 >>>>>>> 068f0b62d8255ce0a1dc58f2dcb2a00497d2386d
+=======
+===========
+spdy-client
+===========
+>>>>>>> 0eee04db8fef19c71a2fa3058624e0526602029e
 
 This fork adds the HTTP version negociation in clear (http://tools.ietf.org/html/draft-ietf-httpbis-http2-04#section-3.2) to SPDY client.
 
@@ -16,20 +22,20 @@ Of course SPDY over TLS is still supported (I did not change anything on TLS pat
 To have the SPDY server you have to use the patch of the node-spdy module : <fixme: add the https://github.com/indutny/node-spdy
 
 <<<<<<< HEAD
+<<<<<<< HEAD
  ?Status
+=======
+>>>>>>> 0eee04db8fef19c71a2fa3058624e0526602029e
 
-This code is completely inmature and is expected to be modified every days.
+ Status
+ =======
 
- ?Usage
+This code is experimental and is expected to be modified often.
 
-At this step I did not adapt the code for post, ping and push. So only the get is supported (partially tested !).
+ Usage
+ ======
 
-
-?Example
-
-var client = require('spdy-client');
-var log4js = require('log4js');
-
+<<<<<<< HEAD
 var logger = log4js.getLogger('CLIENT-TEST');
 logger.setLevel('ALL'); // ALL:   , TRACE:   , DEBUG:   , INFO:  , WARN:   , ERROR:   , FATAL:   , OFF: 
 client.setLogLevel('ALL');
@@ -113,3 +119,12 @@ req.on('error', function(err){
 
 
 >>>>>>> 068f0b62d8255ce0a1dc58f2dcb2a00497d2386d
+=======
+At this step I did not adapt the code for post, ping and push. So only the get is supported (partially tested !).
+
+
+Example
+=======
+
+see example files
+>>>>>>> 0eee04db8fef19c71a2fa3058624e0526602029e
