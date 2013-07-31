@@ -23,8 +23,8 @@ Usage
 At this step I did not adapt the code for post, ping and push. So only the get is supported (partially tested !).
 
 var req = client.get(
-	{
-	path : '/flags/world-flags.htm'
+    {
+       path : '/flags/world-flags.htm'
 	,url : '/'
 	,port: 1337
 	,host: 'localhost'
