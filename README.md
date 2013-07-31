@@ -1,10 +1,13 @@
 spdy-client
 ===========
 
-This fork adds the HTTP version negociation in clear (http://tools.ietf.org/html/draft-ietf-httpbis-http2-04#section-3.2)to SPDY.
+This fork adds the HTTP version negociation in clear (http://tools.ietf.org/html/draft-ietf-httpbis-http2-04#section-3.2) to SPDY client.
 
 
-With this module, you can create SPDY clients in node.js. You can send requests to the SPDY server and add listeners for response or data events.
+With this addon the module, you can create SPDY connexions without TLS which negociates the HTTP2 flavor (spdy/2, spdy/3, HTTP-DRAFT-04/2.0 ...) using HTTP1.1 upgrade field (like with WebSocket). 
+
+
+You can send requests to the SPDY server and add listeners for response or data events.
 
 You need node-spdy module : <fixme: add the https://github.com/indutny/node-spdy
 
