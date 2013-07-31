@@ -1,4 +1,4 @@
-=======
+===========
 spdy-client
 ===========
 
@@ -16,7 +16,7 @@ To have the SPDY server you have to use the patch of the node-spdy module : <fix
  Status
  =======
 
-This code is completely inmature and is expected to be modified every days.
+This code is experimental and is expected to be modified often.
 
  Usage
  ======
