@@ -1,9 +1,6 @@
-<<<<<<< HEAD
-?spdy-client
 =======
 spdy-client
 ===========
->>>>>>> 068f0b62d8255ce0a1dc58f2dcb2a00497d2386d
 
 This fork adds the HTTP version negociation in clear (http://tools.ietf.org/html/draft-ietf-httpbis-http2-04#section-3.2) to SPDY client.
 
@@ -15,101 +12,19 @@ Of course SPDY over TLS is still supported (I did not change anything on TLS pat
 
 To have the SPDY server you have to use the patch of the node-spdy module : <fixme: add the https://github.com/indutny/node-spdy
 
-<<<<<<< HEAD
- ?Status
+
+ Status
+ =======
 
 This code is completely inmature and is expected to be modified every days.
 
- ?Usage
+ Usage
+ ======
 
 At this step I did not adapt the code for post, ping and push. So only the get is supported (partially tested !).
 
 
-?Example
-
-var client = require('spdy-client');
-var log4js = require('log4js');
-
-var logger = log4js.getLogger('CLIENT-TEST');
-logger.setLevel('ALL'); // ALL:   , TRACE:   , DEBUG:   , INFO:  , WARN:   , ERROR:   , FATAL:   , OFF: 
-client.setLogLevel('ALL');
-
-
-var req = client.get(
-    {
-	path : '/flags/world-flags.htm'
+Example
 =======
-Status
-======
 
-This code is completely inmature and is expected to be modified every days.
-
-Usage
-===========
-
-
-At this step I did not adapt the code for post, ping and push. So only the get is supported (partially tested !).
-
-var req = client.get(
-
-    {
-    
-       path : '/flags/world-flags.htm'
->>>>>>> 068f0b62d8255ce0a1dc58f2dcb2a00497d2386d
-	,url : '/'
-	,port: 1337
-	,host: 'localhost'
-	,plain : true // USE plain tcp connection, TLS otherwise
-	,version: 3
-<<<<<<< HEAD
-    },
-=======
-	}
->>>>>>> 068f0b62d8255ce0a1dc58f2dcb2a00497d2386d
-    function(response){
-	    logger.info("--- GET  RESPONSE --");
-	    response.once('data', function (chunk) {
-		    var data = String.fromCharCode.apply(null, new Uint16Array(chunk));
-		    logger.info(data);          
-	});    
-
-}); 
-
-
-req.on('error', function(err){
-      logger.error(err);
-<<<<<<< HEAD
-});    
-
- 
-=======
- });    
-
-
- var req = client.get(
-    {
-	path : '/'
-	,url : '/'
-	,port: 1337
-	,host: 'localhost'
-	,plain : true // USE plain tcp connection, TLS otherwise
-	,version: 'HTTP-DRAFT-04/2.0' //means 
-    },
-    function(response){
-	    logger.info("--- GET  RESPONSE --");
-	    response.once('data', function (chunk) {
-		    var data = String.fromCharCode.apply(null, new Uint16Array(chunk));
-		    logger.info(data);          
-	});    
-
-}); 
-
-
-req.on('error', function(err){
-      logger.error(err);
-      
- });    
- 
-
-
->>>>>>> 068f0b62d8255ce0a1dc58f2dcb2a00497d2386d
+see examples file
