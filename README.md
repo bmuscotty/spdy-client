@@ -27,4 +27,4 @@ At this step I did not adapt the code for post, ping and push. So only the get i
 Example
 =======
 
-see examples file
+see example files
