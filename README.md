@@ -47,6 +47,7 @@ req.on('error', function(err){
       logger.error(err);
  });    
 
+
  var req = client.get(
     {
 	path : '/'
@@ -65,8 +66,10 @@ req.on('error', function(err){
 
 }); 
 
+
 req.on('error', function(err){
       logger.error(err);
+      
  });    
  
 
