@@ -4,9 +4,11 @@ spdy-client
 This fork adds the HTTP version negociation in clear (http://tools.ietf.org/html/draft-ietf-httpbis-http2-04#section-3.2) to SPDY client.
 
 
-With this addon the module, you can create SPDY connexions without TLS which negociates the HTTP2 flavor (spdy/2, spdy/3, HTTP-DRAFT-04/2.0 ...) using HTTP1.1 upgrade field (like with WebSocket). 
+With this addon the module, you can create SPDY connexions which negociate the HTTP2 flavor (spdy/2, spdy/3, HTTP-DRAFT-04/2.0 ...) using HTTP1.1 upgrade field (like with WebSocket). 
 
+Of course SPDY over TLS is still supported (I have to test it to be sure but did not change anything on this path).
 
+-------------------------------
 You can send requests to the SPDY server and add listeners for response or data events.
 
 You need node-spdy module : <fixme: add the https://github.com/indutny/node-spdy
@@ -14,94 +16,53 @@ You need node-spdy module : <fixme: add the https://github.com/indutny/node-spdy
 Usage
 ===========
 
-POST request example :
-```javascript
-var client = require('client');
 
-var req = client.post(
-                      {
-      	                path : '/',
-                       	port: 4000,
-                        host: 'localhost',
-                        //plain : true // USE plain tcp connection, TLS otherwise
-                        headers: {
-			                      'Content-Type': 'text/plain',
-			                      'Content-Length': 9
-                               }
-                      },
-                      function(response){
-                        response.on('data', function (chunk) {
-                            	var data = String.fromCharCode.apply(null, new Uint16Array(chunk));
-                        	logger.info(data);
-                      		});					 
-                    	}
-);  
-req.write('Hello');
-req.end('World');
-```
+At this step I did not adapt the code for push, ping and push. So only the get is supported (tested)
 
-
-GET request example :
-```javascript
 var req = client.get(
-            {
-                path : '/',
-                url : '/',
-                port: 3000,
-                host: 'localhost'
-            },
-        	function(response){
-                	logger.info("--- GET  RESPONSE --");
-                	response.once('data', function (chunk) {
-                    		var data = String.fromCharCode.apply(null, new Uint16Array(chunk));
-                    		logger.info(data);          
-                });    
-                                
-    }); 
-    
+    {
+	path : '/flags/world-flags.htm'
+	,url : '/'
+	,port: 1337
+	,host: 'localhost'
+	,plain : true // USE plain tcp connection, TLS otherwise
+	,version: 3
+    },
+    function(response){
+	    logger.info("--- GET  RESPONSE --");
+	    response.once('data', function (chunk) {
+		    var data = String.fromCharCode.apply(null, new Uint16Array(chunk));
+		    logger.info(data);          
+	});    
+
+}); 
+
+
 req.on('error', function(err){
       logger.error(err);
  });    
-    
-```
 
-PING example :
+ var req = client.get(
+    {
+	path : '/'
+	,url : '/'
+	,port: 1337
+	,host: 'localhost'
+	,plain : true // USE plain tcp connection, TLS otherwise
+	,version: 'HTTP-DRAFT-04/2.0' //means 
+    },
+    function(response){
+	    logger.info("--- GET  RESPONSE --");
+	    response.once('data', function (chunk) {
+		    var data = String.fromCharCode.apply(null, new Uint16Array(chunk));
+		    logger.info(data);          
+	});    
 
-```javascript
-client.ping({
-                port: 3000,
-                host: 'localhost'
-                },
-                function(id){
-           		// success callback
-                }
-    );
-```
+}); 
 
-PUSH handler example :
+req.on('error', function(err){
+      logger.error(err);
+ });    
+ 
 
-```javascript
-var req = client.request(
-            {
-                method: 'GET',
-                path : '/',
-                url : '/',
-                port: 4000,
-                host: 'localhost',
-                pushcb : function(opt, originreq)
-                        {
-                           // application handling    
-                           // The client accepts the pushed data or not
-                            return {
-                                error : null,
-                                success : function(res){
-                                   //...
-                                }
-                            };
-                        }
-            },
-            function(response){
-                    //....
-                });   
-                
-```
+
