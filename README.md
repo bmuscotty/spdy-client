@@ -5,7 +5,8 @@ The intend of the work is to test 'HTTP2 upgrade in the clear' interoperability 
 With this addon the spdy-client module creates SPDY connexions which negociate the HTTP2 flavor (spdy/2, spdy/3, HTTP-DRAFT-04/2.0 ...) using HTTP1.1 Upgrade field (like with WebSocket). 
 
 
-A node-spdy server supporting HTTP version negociation in clear is available at <fixme>. 
+
+A node-spdy server supporting HTTP version negociation in clear is available at [FIXME]. 
 It provides node-spdy module (https://github.com/indutny/node-spdy) with HTTP version negociation in clear.
 
 
