@@ -6,7 +6,7 @@ With this addon the spdy-client module creates SPDY connexions which negociate t
 
 
 
-A node-spdy server supporting HTTP version negociation in clear is available at [FIXME]. 
+A node-spdy server supporting HTTP version negociation in clear is available at FIXME. 
 It provides node-spdy module (https://github.com/indutny/node-spdy) with HTTP version negociation in clear.
 
 
