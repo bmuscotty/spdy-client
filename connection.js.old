@@ -46,23 +46,7 @@ function ClientSpdyConnection(host, port, plain, version) {
     var self = this;
     /* init connection fields */
     this.opened = false;
-    
-    // SEA (horrible) Hack to handle HTTP-DRAFT-04/2.0 protocol name 
-    //
-    this.version = 3;
-    this.upgrade = false;
-    
-    //SEA TODO accept from a versions list
-    //
-    if (version == 'HTTP-DRAFT-04/2.0' ) {
-    	protocol = version
-    	this.version = 3;
-    	this.upgrade = true;
-    } else {
-    	this.version = version;
-    	protocol = 'spdy/'+version
-    }
-  
+    this.version = version || 3;
     /* code mostly copied from server.js:Connection(socket, pool, options) */
     this.deflate = this._deflate = spdy.utils.createDeflate(this.version);
     this.inflate = this._inflate = spdy.utils.createInflate(this.version);
@@ -79,9 +63,6 @@ function ClientSpdyConnection(host, port, plain, version) {
     this.pendingRequests = [];
     this._rstCode = 1;
     this.maxStreams = 100;
-    
-   
-    
     /* Last good Stream ID for a goaway frame */
     this.lastGoodID = 0;
 
@@ -114,7 +95,7 @@ function ClientSpdyConnection(host, port, plain, version) {
             /* ready to start interacting with server */
             self.startConnection();
             self.socket.on('close', function() {
-                logger.info('TLS Socket closed');
+                logger.info('Socket closed');
             });
         });
         this.socket.on('error', function(err) {
@@ -124,26 +105,9 @@ function ClientSpdyConnection(host, port, plain, version) {
         logger.info("trying plain connection");
         this.socket = net.connect(port, host, function() {
             /* ready to start interacting with server */
-            
-            /* SEA send the upgrade (should be nicer implemented: with events ?)*/
-            // TODO url parameter is missing 
-            //
-            self.socket.write("GET / HTTP/1.1\r\nHost:"
-            	+host+":"+port
-            	+ "\r\nConnection: Upgrade, Http2-Settings"
-            	+ "\r\nUpgrade: " + protocol
-            	+ "\r\nHttp2-Settings: Emile fixme please: expecting Frame Setting url64encoded"
-            	+ "\r\n\r\n");
-                logger.info('Plain Socket: Upgrade sent');
-
-            /* SEA receive the switch protocol response: And probably more !*/
-	    self.socket.on('data', function(data) {
-               logger.info("Receiving data: " + self.socket.remoteAddress + ': ' + data);
-	    });
-	    	    
             self.startConnection();
             self.socket.on('close', function() {
-                logger.info('Plain Socket closed. V: ',  version);
+                logger.info('Socket closed');
             });
         });
         this.socket.on('error', function(err) {
@@ -430,16 +394,13 @@ ClientSpdyConnection.prototype.write = function write(data, encoding) {
 ClientSpdyConnection.prototype.startConnection = function startConnection() {
     logger.info("/* started connection */");
     this.opened = true;
-    if (this.upgrade = false) {
-    	this.write(this.windowSizeFrame(10485760));
-    }
+    this.write(this.windowSizeFrame(10485760));
     this.socket.setTimeout(2 * 60 * 1000);
     this.socket.once('timeout', function ontimeout() {
         logger.error('connection timeout');
         this.destroy();
     });
     for ( var cptr = 0; cptr < this.pendingRequests.length; cptr++) {
-        logger.info("SEA sending pending request */");
         this.doRequest(this.pendingRequests[cptr]);
     }
     this.pendingRequests = [];

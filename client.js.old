@@ -20,7 +20,6 @@ var client = exports;
 client.connections = {};
 client.logger = logger;
 
-
 client.setLogLevel = function(level) {
     this.logger.setLevel(level);
     connection.logger.setLevel(level);
@@ -28,7 +27,6 @@ client.setLogLevel = function(level) {
 }
 
 client.protocolSpdyVersion = 3;
-
 
 //
 // ### function get (options, callback)
@@ -42,28 +40,22 @@ client.get = function(options, callback) {
     return client.request(_options, callback);
 }
 
-//SEA added version parameter to get the same interface than ClientSpdyConnection
 //
-// ### function getConnection (host, port, plain, version)
+// ### function getConnection (host, port, plain)
 // #### @host {String} server host
 // #### @port {Integer} server port
 // #### @plain {Boolean} (optional) plain or tls connection
 // Get the TCP connection
 //
-client.getConnection = function(host, port, plain, version) {
-
-   if (version === undefined) version = client.protocolSpdyVersion;
-
+client.getConnection = function(host, port, plain) {
     var key = (plain ? "http" : "https") + "://" + host + ":" + port;
     var conn = this.connections[key];
     if (conn == null) {
         /* create a connection */
-        var conn = new connection.ClientSpdyConnection(host, port, plain, version);
+        var conn = new connection.ClientSpdyConnection(host, port, plain,
+                client.protocolSpdyVersion);
         /* add it to the stack */
         this.connections[key] = conn;
-        
-
-        
     }
     return conn;
 }
@@ -79,9 +71,8 @@ client.request = function(options, callback) {
      * first thing to do is to get an existing spdy connection with the given
      * host
      */
-     // SEA add version
     var spdyConnection = this.getConnection(options.host, options.port,
-            options.plain, options.version);
+            options.plain);
     /* Do not create new streams after GOAWAY */
     if (spdyConnection.goAway)
         return;
@@ -116,8 +107,6 @@ client.ping = function(options, callback) {
 // Stop accepting/sending streams on the connection
 //
 client.goaway = function(host, port, plain, status) {
-    // SEC : to investigate: getConnection does not have a status parameter
-    //
     var conn = this.getConnection(host, port, plain, status);
     conn.goaway(status);
     return (conn != null);
