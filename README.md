@@ -1,17 +1,20 @@
+spdy_client_upgrade:
+-------------------
+
 This fork of https://github.com/nasss/spdy-client adds the HTTP version negociation in clear (http://tools.ietf.org/html/draft-ietf-httpbis-http2-04#section-3.2) to SPDY client.
 
 The intend of the work is to make some 'HTTP2 upgrade in the clear' interoperability tests during the HTTP2 interim meeting next week in Hambourg. 
 
-With this addon the spdy-client module creates SPDY connexions which negociate the HTTP2 flavor (spdy/2, spdy/3, HTTP-DRAFT-04/2.0 ...) using HTTP1.1 Upgrade field (like with WebSocket). 
+With this addon the spdy-client is able to negociate the HTTP2 flavor (spdy/2, spdy/3, HTTP-DRAFT-04/2.0 ...) using HTTP1.1 Upgrade field, See the Data directory for tcpdump capture.
 
 
-
-A node-spdy server supporting HTTP version negociation in clear is available at FIXME. 
+The node-spdy server which supports HTTP version negociation in clear is available at FIXME. 
 It provides node-spdy module (https://github.com/indutny/node-spdy) with HTTP version negociation in clear.
 
+ 
 
 Examples:
-
+--------
 
 GET request example for SPDY:
 ```javascript
